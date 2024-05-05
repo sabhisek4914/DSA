@@ -8,6 +8,21 @@
 class Solution {
 public:
     int subarraySum(vector<int>& nums, int k) {
+        //2Sum approach
+        int prefix_sum=0;
+        unordered_map<int,int> mp;
+        int ans=0;
+        mp[0]=1;
+        for(int i=0;i<nums.size();i++){
+            prefix_sum+=nums[i];
+            int diff=prefix_sum-k;
+            if(mp.count(diff)){
+                ans+=mp[diff];
+            }
+            mp[prefix_sum]++;
+        }
+        return ans;
+
         // int cur_s=0;
         // int start=0;
         // int res=0;
@@ -32,37 +47,39 @@ public:
         //     }
         // }   
         // return res;
-        int n = nums.size(); // take the size of the array
         
-        int prefix[n]; // make a prefix array to store prefix sum
         
-        prefix[0] = nums[0]; // for element at index at zero, it is same
+        // int n = nums.size(); // take the size of the array
         
-        // making our prefix array
-        for(int i = 1; i < n; i++)
-        {
-            prefix[i] = nums[i] + prefix[i - 1];
-        }
+        // int prefix[n]; // make a prefix array to store prefix sum
         
-        unordered_map<int,int> mp; // declare an unordered map
+        // prefix[0] = nums[0]; // for element at index at zero, it is same
         
-        int ans = 0; // to store the number of our subarrays having sum as 'k'
+        // // making our prefix array
+        // for(int i = 1; i < n; i++)
+        // {
+        //     prefix[i] = nums[i] + prefix[i - 1];
+        // }
         
-        for(int i = 0; i < n; i++) // traverse from the prefix array
-        {
-            if(prefix[i] == k) // if it already becomes equal to k, then increment ans
-                ans++;
+        // unordered_map<int,int> mp; // declare an unordered map
+        
+        // int ans = 0; // to store the number of our subarrays having sum as 'k'
+        
+        // for(int i = 0; i < n; i++) // traverse from the prefix array
+        // {
+        //     if(prefix[i] == k) // if it already becomes equal to k, then increment ans
+        //         ans++;
             
-            // now, as we discussed find whether (prefix[i] - k) present in map or not
-            if(mp.find(prefix[i] - k) != mp.end())
-            {
-                ans += mp[prefix[i] - k]; // if yes, then add it our answer
-            }
+        //     // now, as we discussed find whether (prefix[i] - k) present in map or not
+        //     if(mp.find(prefix[i] - k) != mp.end())
+        //     {
+        //         ans += mp[prefix[i] - k]; // if yes, then add it our answer
+        //     }
             
-            mp[prefix[i]]++; // put prefix sum into our map
-        }
+        //     mp[prefix[i]]++; // put prefix sum into our map
+        // }
         
-        return ans; // and at last, return our answer
+        // return ans; // and at last, return our answer
     }
 };
 // @lc code=end
